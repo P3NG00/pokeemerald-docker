@@ -1,2 +1,2 @@
 #!/bin/bash
-sha1sum output/* | tee pokeemerald.sha1
+sha1sum ./output/pokeemerald.gba | tee pokeemerald.sha1
