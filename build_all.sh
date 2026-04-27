@@ -1,10 +1,7 @@
 #!/bin/bash
 
-# Remove previously built files
-mkdir -p ./output/ && rm -rf ./output/*
-
-# Builds the normal ROM
-# Will always build sha1 f3ae088181bf583e55daf962a92bb46f4f1d07b7
+# Builds the ROM using agbcc compiler to produce
+# sha1 f3ae088181bf583e55daf962a92bb46f4f1d07b7
 ./build.sh
 
 # Builds the ROM with fixes for bugs defined in the code
@@ -16,5 +13,5 @@ mkdir -p ./output/ && rm -rf ./output/*
 # Builds the ROM using both bugfixes and modern compiler
 ./build.sh --bugfix --modern
 
-# Compares the sha1 of all built files againt the previously calculated hashes
-sha1sum --check ./pokeemerald.sha1
+# Compares the sha1 of built pokeemerald.gba file
+./sha1_check.sh

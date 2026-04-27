@@ -31,7 +31,8 @@ for arg in "$@"; do
     esac
 done
 
-# Determine build variables based on command-line arguments
+# IMAGE_TAG tracks the 4 unique build types to avoid overwriting images/containers.
+# BUILD_NAME tracks the 2 internal compiler outputs (modern vs. agbcc) so 'podman cp' works.
 IMAGE_TAG="pokeemerald"
 BUILD_NAME="pokeemerald"
 MAKE_ARGS=
@@ -58,6 +59,9 @@ podman run \
     --name $IMAGE_TAG \
     --replace \
     $IMAGE_TAG
+
+# Create Output Directory
+mkdir -p ./output/
 
 # Copy built file to output directory
 podman cp $IMAGE_TAG:/pokeemerald/${BUILD_NAME}.gba ./output/${IMAGE_TAG}.gba
