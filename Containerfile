@@ -1,8 +1,9 @@
 FROM docker.io/gcc:latest
 
 # Commit Hashes
-ARG POKEEMERALD_COMMIT_HASH="a3c551fe21a6a4d4beb89a82404cf776a6dae635"
-ARG AGBCC_COMMIT_HASH="da598c1d918402c42c0c0d7128ba14567f3175e9"
+ARG POKEEMERALD_COMMIT_HASH="a3c551fe21a6a4d4beb89a82404cf776a6dae635" \
+    AGBCC_COMMIT_HASH="da598c1d918402c42c0c0d7128ba14567f3175e9" \
+    BUILD_BUGFIX=false
 
 # Update, Install, and Clean Packages
 # gcc-arm-none-eabi and libnewlib-arm-none-eabi are necessary for using modern compiler
@@ -31,7 +32,6 @@ RUN git clone --no-checkout https://github.com/pret/agbcc \
 # Setup workspace
 WORKDIR /pokeemerald
 # Setup BUGFIX building
-ARG BUILD_BUGFIX=false
 RUN if [ "$BUILD_BUGFIX" = "true" ]; then \
         sed -i "s|^//#define BUGFIX|#define BUGFIX|" include/config.h; \
     fi
