@@ -47,9 +47,15 @@ if [ "$BUILD_MODERN" = "true" ]; then
     MAKE_ARGS="modern"
 fi
 
+# Resolve the latest commit of each repo up front so the Containerfile's clone step is only
+# ever re-run when there's an actual new commit to fetch, instead of on every single build.
+. "$(dirname "$0")/resolve_commits.sh"
+
 # Build the image
 podman build \
     --build-arg BUILD_BUGFIX=${BUILD_BUGFIX} \
+    --build-arg POKEEMERALD_COMMIT_HASH=${POKEEMERALD_COMMIT_HASH} \
+    --build-arg AGBCC_COMMIT_HASH=${AGBCC_COMMIT_HASH} \
     --env MAKE_ARGS=${MAKE_ARGS} \
     --tag $IMAGE_TAG \
     .
